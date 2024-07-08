@@ -1,34 +1,47 @@
 // script.js
-const apiKey = 25797e8314601f3e49c52d5b13965f35;
-const searchInput = document.getElementById('search-input');
-const searchBtn = document.getElementById('search-btn');
-const cityElement = document.getElementById('city');
-const temperatureElement = document.getElementById('temperature');
-const descriptionElement = document.getElementById('description');
-const humidityElement = document.getElementById('humidity');
-const windSpeedElement = document.getElementById('wind-speed');
+// Get the popup button and popup container
+const popupBtn = document.getElementById('popup-btn');
+const popupContainer = document.getElementById('popup');
 
-searchBtn.addEventListener('click', fetchWeatherData);
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        fetchWeatherData();
-    }
+// Add event listener to the popup button
+popupBtn.addEventListener('click', () => {
+  // Toggle the popup container's visibility
+  popupContainer.classList.toggle('show-popup');
 });
 
-function fetchWeatherData() {
-    const city = searchInput.value.trim();
-    if (city) {
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`)
-           .then(response => response.json())
-           .then(data => displayWeatherData(data))
-           .catch(error => console.error(error));
-    }
-}
+// Get the close popup button
+const closePopupBtn = document.querySelector('.close-popup');
 
-function displayWeatherData(data) {
-    cityElement.textContent = data.name;
-    temperatureElement.textContent = `Temperature: ${data.main.temp}°C`;
-    descriptionElement.textContent = `Description: ${data.weather[0].description}`;
-    humidityElement.textContent = `Humidity: ${data.main.humidity}%`;
-    windSpeedElement.textContent = `Wind Speed: ${data.wind.speed} m/s`;
-}
+// Add event listener to the close popup button
+closePopupBtn.addEventListener('click', () => {
+  // Toggle the popup container's visibility
+  popupContainer.classList.toggle('show-popup');
+});
+
+// Get the add to cart buttons
+const addToCartBtns = document.querySelectorAll('.add-to-cart');
+
+// Add event listener to each add to cart button
+addToCartBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    // Alert the user that the item has been added to cart
+    alert('Item added to cart!');
+  });
+});
+
+// Get the payment form
+const paymentForm = document.getElementById('payment-form');
+
+// Add event listener to the payment form's submit event
+paymentForm.addEventListener('submit', (e) => {
+  // Prevent the default form submission behavior
+  e.preventDefault();
+
+  // Get the payment form data
+  const cardNumber = document.getElementById('card-number').value;
+  const expirationDate = document.getElementById('expiration-date').value;
+  const cvv = document.getElementById('cvv').value;
+
+  // Alert the user that the payment has been processed
+  alert(`Payment processed! Card number: ${cardNumber}, Expiration date: ${expirationDate}, CVV: ${cvv}`);
+});
